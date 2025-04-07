@@ -10,7 +10,6 @@ public class Question {
         this.id = id;
         this.text = text;
         this.answers = answers;
-
     }
 
     public int getId() { return id; }
