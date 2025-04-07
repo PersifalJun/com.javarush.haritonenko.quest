@@ -2,8 +2,8 @@ package org.example.quest.entity;
 
 public class Answer {
     private int id;
-    private String buttonText;     // Текст кнопки
-    private String actionText;     // Текст, который показывается после выбора
+    private String buttonText;
+    private String actionText;
     private int nextQuestionId;
 
     public Answer(int id, String buttonText, String actionText, int nextQuestionId) {
