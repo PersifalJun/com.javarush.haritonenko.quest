@@ -74,7 +74,7 @@ class QuestServletTest {
     }
     @Test
     void shouldForwardToActionWhenAnswerChosen() throws ServletException, IOException {
-        when(session.getAttribute("playerName")).thenReturn("Алиса");
+        when(session.getAttribute("playerName")).thenReturn("Евгений");
         when(session.getAttribute("gamesPlayed")).thenReturn(2);
         when(request.getParameter("answerId")).thenReturn("2");
         when(request.getParameter("step")).thenReturn("1");

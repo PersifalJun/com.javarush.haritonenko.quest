@@ -11,13 +11,19 @@ import java.io.IOException;
 
 @WebServlet(name = "questServlet", value = "/quest-servlet")
 public class QuestServlet extends HttpServlet {
-    private QuestionAndAnswerService service;
+    QuestionAndAnswerService service;
 
 
     @Override
     public void init() {
         service = new QuestionAndAnswerService();
     }
+
+    public QuestionAndAnswerService getService() {
+        return service;
+    }
+
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -29,7 +35,7 @@ public class QuestServlet extends HttpServlet {
         Integer gamesPlayed = (Integer) session.getAttribute("gamesPlayed");
         if (gamesPlayed == null) gamesPlayed = 0;
 
-        // Если имя не введено — отправить на welcome.jsp
+
         if (playerName == null) {
             req.setAttribute("gamesPlayed", gamesPlayed);
             try {
@@ -45,7 +51,7 @@ public class QuestServlet extends HttpServlet {
         String stepStr = req.getParameter("step");
         int step = (stepStr != null) ? Integer.parseInt(stepStr) : 1;
 
-        // Выбран ответ — показываем промежуточное сообщение
+
         if (answerIdStr != null) {
             int answerId = Integer.parseInt(answerIdStr);
             Answer chosenAnswer = service.getAnswerById(answerId);
@@ -64,7 +70,7 @@ public class QuestServlet extends HttpServlet {
             }
         }
 
-        // Загрузка вопроса
+
         int questionId = (questionIdStr == null) ? 1 : Integer.parseInt(questionIdStr);
         Question question = service.getQuestionById(questionId);
 
@@ -73,13 +79,13 @@ public class QuestServlet extends HttpServlet {
             return;
         }
 
-        // Если это финальный экран — увеличим счётчик
+
         if (question.getAnswers().isEmpty()) {
             gamesPlayed++;
             session.setAttribute("gamesPlayed", gamesPlayed);
         }
 
-        // Передаём данные в quest.jsp
+
         req.setAttribute("question", question);
         req.setAttribute("answers", question.getAnswers());
         req.setAttribute("playerName", playerName);
@@ -101,4 +107,5 @@ public class QuestServlet extends HttpServlet {
         }
         res.sendRedirect(req.getContextPath() + "/quest-servlet");
     }
+
 }
